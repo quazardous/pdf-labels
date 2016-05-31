@@ -76,7 +76,7 @@ class SimpleFluidLabelLayout implements LabelLayoutInterface
         $totalUsableHeight = $writer->getPageHeight() - $this->getTopMargin() - $this->getBottomMargin();
         if (is_null($this->options['vertical_margin'])) {
             if (is_null($this->options['grid_rows'])) {
-                // guess number of cols
+                // guess number of rows
                 $this->options['grid_rows'] = intval(floor($totalUsableHeight / $this->getLabelHeight()));
             }
             // guess V margin
