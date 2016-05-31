@@ -1,0 +1,28 @@
+{
+	"name" : "quazardous/pdf-labels",
+	"keywords" : [
+        "PDF", "Print", "label"
+    ],
+	"type" : "library",
+	"description" : "Yet another PDF labels class",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Quazardous",
+			"email" : "berliozdavid@gmail.com",
+			"role" : "Developer"
+		}
+	],
+   "autoload" : {
+        "psr-4" : {
+            "Quazardous\\PdfLabels\\" : "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "require": {
+        "tecnickcom/tcpdf": "^6.2"
+    }
+}

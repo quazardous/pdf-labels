@@ -1,0 +1,6 @@
+/.project
+/vendor/
+/.README.md.html
+/.buildpath
+/composer.lock
+/.settings/
