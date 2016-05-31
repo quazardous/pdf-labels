@@ -64,7 +64,7 @@ class LabelEngine implements HasUnitOfLengthInterface
         } elseif (is_array($data)) {
             $this->data = new ArrayLabelDataProvider($data);
         } elseif (is_callable($data)) {
-            $this->data = new CallbackLabelDataProvider($callback);
+            $this->data = new CallbackLabelDataProvider($data);
         } else {
             throw new \InvalidArgumentException('Incorrect data provider');
         }
