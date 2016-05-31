@@ -92,10 +92,9 @@ $pdf->SetAuthor('quazardous');
 // the engine calculate the correct $x and $y
 $pdf->setRenderLabelCallback(function ($x, $y, $data) use ($pdf) {
     $aff_border = 0;
-    $pdf->setX($x);
-    $pdf->setY($y, false);
     $pdf->SetFont("helvetica");
     $pdf->setX($x);
+    $pdf->setY($y, false);
     $pdf->Cell(0 , 0, $data[0], $aff_border, 1, 'L', 0);
     $pdf->setX($x);
     $pdf->setY($y + 6, false);
