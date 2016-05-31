@@ -387,40 +387,16 @@ class PdfLabelsMainTest extends PHPUnit_Framework_TestCase
         
         // some simle labels data
         // you can create data providers
-        $labels = [
-            ['Foo', 'Bar'],
-            ['One', 'Two'],
-            ['Isaac', 'Asimov'],
-            ['Black', 'White'],
-            ['Foo', 'Bar'],
-            ['One', 'Two'],
-            ['Isaac', 'Asimov'],
-            ['Black', 'White'],
-            ['Foo', 'Bar'],
-            ['One', 'Two'],
-            ['Isaac', 'Asimov'],
-            ['Black', 'White'],
-            ['Foo', 'Bar'],
-            ['One', 'Two'],
-            ['Isaac', 'Asimov'],
-            ['Black', 'White'],
-            ['Foo', 'Bar'],
-            ['One', 'Two'],
-            ['Isaac', 'Asimov'],
-            ['Black', 'White'],
-            ['Foo', 'Bar'],
-            ['One', 'Two'],
-            ['Isaac', 'Asimov'],
-            ['Black', 'White'],
-            ['Foo', 'Bar'],
-            ['One', 'Two'],
-            ['Isaac', 'Asimov'],
-            ['Black', 'White'],
-            ['Foo', 'Bar'],
-            ['One', 'Two'],
-            ['Isaac', 'Asimov'],
-            ['Black', 'White'],
-        ];
+        $labels = [];
+        
+        for ($i=0; $i<50; ++$i) {
+            $labels = array_merge($labels, [
+                ['Foo', 'Bar'],
+                ['One', 'Two'],
+                ['Isaac', 'Asimov'],
+                ['Black', 'White'],
+            ]);
+        }
         
         $engine = new LabelEngine($layout, $labels);
         
@@ -432,15 +408,19 @@ class PdfLabelsMainTest extends PHPUnit_Framework_TestCase
         
         // set the render label callback
         $pdf->setRenderLabelCallback(function ($x, $y, $data) use ($pdf) {
+            static $i;
+            ++$i;
             $aff_border = 0;
-            $pdf->setX($x);
-            $pdf->setY($y, false);
             $pdf->SetFont("helvetica");
             $pdf->setX($x);
+            $pdf->setY($y, false);
             $pdf->Cell(0 , 0, $data[0], $aff_border, 1, 'L', 0);
             $pdf->setX($x);
             $pdf->setY($y + 6, false);
             $pdf->Cell(0 , 0, $data[1], $aff_border, 1, 'L', 0);
+            $pdf->setX($x);
+            $pdf->setY($y + 12, false);
+            $pdf->Cell(0 , 0, $i, $aff_border, 1, 'L', 0);
         });
         
         // define the label writer
