@@ -164,8 +164,6 @@ class LabelEngine implements HasUnitOfLengthInterface
             || empty($this->getLayout()->getLabelHeight())
             || empty($this->getLayout()->getGridCols())
             || empty($this->getLayout()->getGridRows())
-            || empty($this->getLayout()->getHorizontalMargin())
-            || empty($this->getLayout()->getVerticalMargin())
         ) {
             throw new \InvalidArgumentException('Incomplete layout');
         }
