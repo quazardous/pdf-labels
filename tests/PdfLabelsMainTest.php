@@ -432,4 +432,67 @@ class PdfLabelsMainTest extends PHPUnit_Framework_TestCase
         // standard TCPDF generation
         $pdf->Output(__DIR__ . "/gen/example1.pdf", "F");
     }
+    
+    public function testExample2()
+    {
+        // a fluid label layout trying to auto fit 105mm * 70mm in A4
+        $options = [
+            'label_width' => 105.0,
+            'label_height' => 70.0,
+            'horizontal_margin' => 0.0, //3,
+            'vertical_margin' => 0.0, //3,
+            'top_margin' => 0.0,
+            'bottom_margin' => 0.0,
+            'left_margin' => 0.0,
+            'right_margin' => 0.0,
+        ];
+        $layout = new SimpleFluidLabelLayout($options);
+        
+        // some simle labels data
+        // you can create data providers
+        $labels = [];
+        
+        for ($i=0; $i<50; ++$i) {
+            $labels = array_merge($labels, [
+                ['Foo', 'Bar'],
+                ['One', 'Two'],
+                ['Isaac', 'Asimov'],
+                ['Black', 'White'],
+            ]);
+        }
+        
+        $engine = new LabelEngine($layout, $labels);
+        
+        $pdf = new TcPdfLabelWriter('P', 'mm', 'A4');
+        // add standard TCPDF attributes
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        $pdf->SetAuthor('quazardous');
+        
+        // set the render label callback
+        $pdf->setRenderLabelCallback(function ($x, $y, $data) use ($pdf) {
+            static $i;
+            ++$i;
+            $aff_border = 0;
+            $pdf->SetFont("helvetica");
+            $pdf->setX($x);
+            $pdf->setY($y, false);
+            $pdf->Cell(0 , 0, $data[0], $aff_border, 1, 'L', 0);
+            $pdf->setX($x);
+            $pdf->setY($y + 6, false);
+            $pdf->Cell(0 , 0, $data[1], $aff_border, 1, 'L', 0);
+            $pdf->setX($x);
+            $pdf->setY($y + 12, false);
+            $pdf->Cell(0 , 0, $i, $aff_border, 1, 'L', 0);
+        });
+        
+        // define the label writer
+        $engine->setWriter($pdf);
+        
+        // main loop
+        $engine->populate();
+        
+        // standard TCPDF generation
+        $pdf->Output(__DIR__ . "/gen/example2.pdf", "F");
+    }
 }
